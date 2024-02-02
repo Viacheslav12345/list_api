@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474424103318",
+    "project_id": "city-weather-travel",
+    "storage_bucket": "city-weather-travel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474424103318:android:ca429b7239d994d607cdb7",
+        "android_client_info": {
+          "package_name": "com.example.list_api"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5_N_eN2AQ2Q6WoWAiP_emrUpmXmUY_jI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
