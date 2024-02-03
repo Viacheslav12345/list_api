@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Country {
@@ -21,7 +22,7 @@ class Country {
   factory Country.fromMap(Map<String, dynamic> map) {
     return Country(
       name: map['name'] as String,
-      cities: List<String>.from((map['cities'] as List<String>)),
+      cities: (map['cities'] as List).map((city) => city as String).toList(),
       image: map['image'] as String,
     );
   }
@@ -30,4 +31,16 @@ class Country {
 
   factory Country.fromJson(String source) =>
       Country.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Country copyWith({
+    String? name,
+    List<String>? cities,
+    String? image,
+  }) {
+    return Country(
+      name: name ?? this.name,
+      cities: cities ?? this.cities,
+      image: image ?? this.image,
+    );
+  }
 }

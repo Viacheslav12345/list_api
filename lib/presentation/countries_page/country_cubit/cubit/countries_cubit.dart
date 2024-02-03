@@ -26,16 +26,31 @@ class CountriesCubit extends Cubit<CountriesState> {
     }
   }
 
-  Future<void> onAddCountry(Country country) async {
-    // if (state is CountriesLoaded) {
-    // emit(CountriesLoading());
-    try {
-      await databaseService.addCountry(country);
+  Future<void> onEditCountry(Country country) async {
+    emit(CountriesLoading());
 
-      // emit(CountriesLoaded(allCountries));
+    try {
+      await databaseService.updateCountry(country);
     } catch (exception) {
       emit(CountriesLoadingFailure(exception: exception));
     }
-    // }
+  }
+
+  Future<void> onAddCountry(Country country) async {
+    emit(CountriesLoading());
+    try {
+      await databaseService.addCountry(country);
+    } catch (exception) {
+      emit(CountriesLoadingFailure(exception: exception));
+    }
+  }
+
+  Future<void> onDeleteCountry(String countryName) async {
+    emit(CountriesLoading());
+    try {
+      await databaseService.daleteCountry(countryName);
+    } catch (exception) {
+      emit(CountriesLoadingFailure(exception: exception));
+    }
   }
 }

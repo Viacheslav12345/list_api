@@ -12,6 +12,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CountriesCubit(databaseService: DatabaseService()),
+      create: (context) => CountriesCubit(databaseService: DatabaseService())
+        ..onLoadAllCountries(),
       child: MaterialApp(
         theme: lightTheme,
         home: const HomePage(),

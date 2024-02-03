@@ -20,6 +20,8 @@ final lightTheme = ThemeData.light().copyWith(
     backgroundColor: Color.fromARGB(255, 154, 144, 179),
     elevation: 3,
   ),
+  dialogTheme:
+      const DialogTheme(backgroundColor: Color.fromARGB(255, 127, 117, 148)),
   tabBarTheme: const TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,
     indicator: BoxDecoration(
@@ -31,44 +33,69 @@ final lightTheme = ThemeData.light().copyWith(
     titleLarge: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
       fontSize: 28,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
     titleMedium: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
       fontSize: 23,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
     titleSmall: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
       fontSize: 19,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
     bodyLarge: TextStyle(
       color: Color.fromARGB(255, 128, 118, 148),
       fontSize: 19,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
     bodyMedium: TextStyle(
       color: Color.fromARGB(255, 128, 118, 148),
       fontSize: 16,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
     bodySmall: TextStyle(
       color: Color.fromARGB(255, 128, 118, 148),
       fontSize: 13,
-      fontFamily: 'ABeeZee',
+      fontFamily: 'Comfortaa',
     ),
   ),
   primaryTextTheme: const TextTheme(
     titleLarge: TextStyle(
-      fontSize: 28,
-    ),
+        fontSize: 28,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
     titleMedium: TextStyle(
-      fontSize: 24,
-    ),
+        fontSize: 24,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
+    titleSmall: TextStyle(
+        fontSize: 22,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
+    bodyLarge: TextStyle(
+        fontSize: 20,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
+    bodyMedium: TextStyle(
+        fontSize: 18,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
+    bodySmall: TextStyle(
+        fontSize: 13,
+        color: Color.fromARGB(255, 236, 228, 251),
+        fontFamily: 'Comfortaa'),
     headlineSmall: TextStyle(
       fontSize: 22,
     ),
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 236, 228, 251)),
+        iconColor: MaterialStateProperty.all(
+            const Color.fromARGB(255, 127, 117, 148))),
   ),
   progressIndicatorTheme:
       const ProgressIndicatorThemeData(color: Colors.white10),
