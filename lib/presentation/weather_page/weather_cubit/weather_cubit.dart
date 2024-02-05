@@ -12,12 +12,14 @@ class WeatherCubit extends Cubit<WeatherState> {
     this.weatherService,
   ) : super(WeatherInitial());
 
-  Future<void> onLoadCityForecast(List<String> citiesList) async {
+  Future<void> onLoadCityForecast(
+      List<String> citiesList, String language) async {
     List<Forecast> listForecast = [];
     // emit(WeatherLoading());
     for (var i = 0; i < citiesList.length; i++) {
       try {
-        var cityForecast = await weatherService.getWeather(citiesList[i]);
+        var cityForecast =
+            await weatherService.getWeather(citiesList[i], language);
         listForecast.add(cityForecast);
       } catch (e) {
         emit(WeatherLoadingFailure(exception: e));

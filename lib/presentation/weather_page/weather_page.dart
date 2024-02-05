@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:list_api/main.dart';
 import 'package:list_api/presentation/weather_page/weather_cubit/weather_cubit.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/city_widget.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/days_forecast_widget.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/details_widget.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/temp_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WeatherPage extends StatefulWidget {
   final String country;
@@ -19,8 +21,8 @@ class WeatherPage extends StatefulWidget {
 
 class _WeatherPageState extends State<WeatherPage> {
   Future<void> _pullRefresh() async {
-    await BlocProvider.of<WeatherCubit>(context)
-        .onLoadCityForecast(widget.cityNameList);
+    await BlocProvider.of<WeatherCubit>(context).onLoadCityForecast(
+        widget.cityNameList, MyApp.of(context)!.locale.languageCode);
   }
 
   @override
@@ -37,7 +39,7 @@ class _WeatherPageState extends State<WeatherPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Wather forecast in ${widget.country}',
+          '${AppLocalizations.of(context)!.weatherTitle} ${widget.country}',
         ),
       ),
       body: RefreshIndicator(

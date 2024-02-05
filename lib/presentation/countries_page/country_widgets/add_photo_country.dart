@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:list_api/data/models/country.dart';
 import 'package:list_api/presentation/countries_page/country_cubit/cubit/countries_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:path/path.dart' as path;
 
@@ -28,11 +29,8 @@ class _AddPhotoCountryState extends State<AddPhotoCountry> {
     Country country = widget.country.copyWith(image: photoCountry);
 
     countryBloc
-            .onEditCountry(country)
-            .then((value) => countryBloc.onLoadAllCountries())
-
-        // .whenComplete(() => countryBloc.onLoadAllCountries())
-        ;
+        .onEditCountry(country)
+        .then((value) => countryBloc.onLoadAllCountries());
   }
 
   @override
@@ -57,7 +55,7 @@ class _AddPhotoCountryState extends State<AddPhotoCountry> {
 
             var snapshot = await uploadTask!.whenComplete(() => {
                   Fluttertoast.showToast(
-                    msg: "Фото ${widget.country.name} завантажено.",
+                    msg: AppLocalizations.of(context)!.photoDownloaded,
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 2,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:list_api/data/models/weather.dart';
+import 'package:list_api/main.dart';
 
 class DaysForecastWidget extends StatelessWidget {
   final Forecast forecast;
@@ -20,7 +21,8 @@ class DaysForecastWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         var formatDate = DateTime.fromMillisecondsSinceEpoch(
             forecast.list![listDaysIndex[index]].dt! * 1000);
-        String date = DateFormat('EEE,dd').format(formatDate);
+        String locale = MyApp.of(context)!.locale.languageCode;
+        String date = DateFormat('EEE,dd', locale).format(formatDate);
         var icon = forecast.list?[listDaysIndex[index]].getIconUrl();
         var temp = forecast.list?[listDaysIndex[index]].main?.temp
                 ?.toStringAsFixed(0) ??

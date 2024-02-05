@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:list_api/data/models/country.dart';
+import 'package:list_api/main.dart';
 import 'package:list_api/presentation/countries_page/add_or_edit_country.dart';
 import 'package:list_api/presentation/countries_page/country_cubit/cubit/countries_cubit.dart';
 import 'package:list_api/presentation/countries_page/country_widgets/add_photo_country.dart';
 import 'package:list_api/presentation/weather_page/weather_cubit/weather_cubit.dart';
 import 'package:list_api/presentation/weather_page/weather_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CountriesPage extends StatelessWidget {
   const CountriesPage({Key? key}) : super(key: key);
@@ -72,7 +74,7 @@ class CountriesPage extends StatelessWidget {
                                           255, 147, 246, 185),
                                       foregroundColor: Colors.white,
                                       icon: Icons.edit,
-                                      label: 'Редагувати',
+                                      label: AppLocalizations.of(context)!.edit,
                                     ),
                                     SlidableAction(
                                       borderRadius: const BorderRadius.only(
@@ -85,7 +87,8 @@ class CountriesPage extends StatelessWidget {
                                           255, 248, 104, 104),
                                       foregroundColor: Colors.white,
                                       icon: Icons.delete,
-                                      label: 'Видалити',
+                                      label:
+                                          AppLocalizations.of(context)!.delete,
                                     ),
                                   ],
                                 ),
@@ -117,8 +120,6 @@ class CountriesPage extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.start,
                                             children: [
                                               for (var i = 0;
                                                   i <
@@ -128,7 +129,6 @@ class CountriesPage extends StatelessWidget {
                                                   i++)
                                                 Text(
                                                   allCountries[index].cities[i],
-                                                  // textAlign: TextAlign.left,
                                                   style:
                                                       theme.textTheme.bodySmall,
                                                   overflow:
@@ -142,7 +142,10 @@ class CountriesPage extends StatelessWidget {
                                                       context)
                                                   .onLoadCityForecast(
                                                       allCountries[index]
-                                                          .cities)
+                                                          .cities,
+                                                      MyApp.of(context)!
+                                                          .locale
+                                                          .languageCode)
                                                   .then(
                                                     (value) =>
                                                         Navigator.of(context)

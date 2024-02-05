@@ -1,0 +1,18 @@
+{
+ "applicationTitle": "Weather forecast",  
+ "weatherTitle": "Weather forecast in",
+ "country": "Country",
+ "cities": "Cities",
+ "countryName": "Country name",
+ "cityName": "City name",
+ "save": "Save",
+ "enterCountryName": "Enter country name.",
+ "enterCityName": "Enter city name.",
+ "countryMustNotBeEmpty": "The country name must not be empty!",
+ "cityMustNotBeEmpty": "The city name must not be empty!",
+ "enterOneCity": "Enter at least one city name in the 'Cities' field",
+ "photoDownloaded": "The Photo downloaded",
+ "edit": "Edit",
+ "delete": "Delete",
+ "checkIfEnteredNames": "Check if entered country name and city name."
+}

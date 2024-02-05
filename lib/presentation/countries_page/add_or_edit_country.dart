@@ -1,10 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:list_api/data/models/country.dart';
 import 'package:list_api/presentation/countries_page/country_cubit/cubit/countries_cubit.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddOrEditCountry extends StatefulWidget {
   final Country? country;
@@ -28,7 +28,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
 
   void showToast(String message) {
     Fluttertoast.showToast(
-      msg: "Enter country name.",
+      msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 2,
@@ -63,7 +63,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
 
   void addCity() {
     if (_cityNameController.text.isEmpty) {
-      showToast("Enter city name.");
+      showToast(AppLocalizations.of(context)!.enterCityName);
     } else if (_cityNameController.text.isNotEmpty &&
         !citiesList.contains(_cityNameController.text)) {
       citiesList.insert(0, _cityNameController.text);
@@ -92,7 +92,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               height: 20,
             ),
             Text(
-              'Country',
+              AppLocalizations.of(context)!.country,
               style: Theme.of(context).primaryTextTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -101,7 +101,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               controller: _countryNameController,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "The country name must not be empty!";
+                  return AppLocalizations.of(context)!.countryMustNotBeEmpty;
                 }
                 return null;
               },
@@ -114,7 +114,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   isCollapsed: true,
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                  hintText: "Country name*",
+                  hintText: AppLocalizations.of(context)!.countryName,
                   hintStyle: Theme.of(context).textTheme.bodySmall,
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -142,7 +142,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   )),
               onEditingComplete: () {
                 if (_cityNameController.text.isEmpty) {
-                  showToast("Enter country name.");
+                  showToast(AppLocalizations.of(context)!.enterCountryName);
                 } else {
                   nameCountry = _countryNameController.text;
                   FocusScope.of(context).nextFocus();
@@ -158,7 +158,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               height: 10,
             ),
             Text(
-              'Cities',
+              AppLocalizations.of(context)!.cities,
               style: Theme.of(context).primaryTextTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -169,7 +169,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                     controller: _cityNameController,
                     validator: (value) {
                       if (citiesList.isEmpty) {
-                        return "The city name must not be empty!";
+                        return AppLocalizations.of(context)!.cityMustNotBeEmpty;
                       }
                       return null;
                     },
@@ -182,7 +182,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                         isCollapsed: true,
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 13),
-                        hintText: "City name*",
+                        hintText: AppLocalizations.of(context)!.cityName,
                         hintStyle: Theme.of(context).textTheme.bodySmall,
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -245,7 +245,6 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                                         .primaryTextTheme
                                         .bodyMedium,
                                   ),
-                                  // const SizedBox(height: 5),
                                   CircleAvatar(
                                     backgroundColor:
                                         Theme.of(context).cardColor,
@@ -262,7 +261,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                         ],
                       ))
                     : Text(
-                        'Enter at least one city name in the "Cities" field',
+                        AppLocalizations.of(context)!.enterOneCity,
                         style: Theme.of(context).primaryTextTheme.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -283,7 +282,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   autoValidate = true;
                 });
 
-                if (_cityNameController.text.isNotEmpty &&
+                if (_countryNameController.text.isNotEmpty &&
                     citiesList.isNotEmpty) {
                   var country = Country(
                     name: _countryNameController.text,
@@ -302,11 +301,11 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                           Navigator.pop(context);
                         });
                 } else {
-                  showToast("Check if entered country name and city name.");
+                  showToast(AppLocalizations.of(context)!.checkIfEnteredNames);
                 }
               },
-              child:
-                  Text('Save', style: Theme.of(context).textTheme.titleSmall),
+              child: Text(AppLocalizations.of(context)!.save,
+                  style: Theme.of(context).textTheme.titleSmall),
             ),
           ],
         ),

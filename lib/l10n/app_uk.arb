@@ -1,0 +1,18 @@
+{ 
+ "applicationTitle": "Прогноз погоди",
+ "weatherTitle": "Прогноз погоди в",
+ "country": "Країна",
+ "cities": "Міста",
+ "countryName": "Назва країни",
+ "cityName": "Назва міста",
+ "save": "Зберегти",
+ "enterCountryName": "Введіть назву країни.",
+ "enterCityName": "Введіть назву міста.",
+ "countryMustNotBeEmpty": "Назва країни не повинна бути пустою!",
+ "cityMustNotBeEmpty": "Назва міста не повинна бути пустою!",
+ "enterOneCity": "Введіть хоча б одну назву міста в поле 'Міста'",
+ "photoDownloaded": "Фото завантажено.",
+ "edit": "Редагувати",
+ "delete": "Видалити",
+ "checkIfEnteredNames": "Check if entered country name and city name."
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:list_api/data/models/weather.dart';
+import 'package:list_api/main.dart';
 
 class CityWidget extends StatelessWidget {
   final Forecast? forecast;
@@ -10,10 +11,10 @@ class CityWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     String city = forecast?.city?.name ?? '';
-    String country = forecast?.city?.country ?? '';
+    String locale = MyApp.of(context)!.locale.languageCode;
     var formatDate =
         DateTime.fromMillisecondsSinceEpoch(forecast!.list![0].dt! * 1000);
-    String date = DateFormat('EEEE, MMM d').format(formatDate);
+    String date = DateFormat('EEEE, MMM d', locale).format(formatDate);
 
     return Column(
       children: [
