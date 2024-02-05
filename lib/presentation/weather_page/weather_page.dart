@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:list_api/presentation/weather_page/weather_cubit/weather_cubit.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/city_widget.dart';
+import 'package:list_api/presentation/weather_page/weather_widgets.dart/days_forecast_widget.dart';
+import 'package:list_api/presentation/weather_page/weather_widgets.dart/details_widget.dart';
 import 'package:list_api/presentation/weather_page/weather_widgets.dart/temp_widget.dart';
 
 class WeatherPage extends StatefulWidget {
@@ -16,73 +18,73 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  // @override
-  // void initState() {
-  //   BlocProvider.of<WeatherCubit>(context)
-  //       .onLoadCityForecast(widget.cityNameList);
-  //   super.initState();
-  // }
-
-  // List<Future<Forecast>> listForecastOfCity = [];
+  Future<void> _pullRefresh() async {
+    await BlocProvider.of<WeatherCubit>(context)
+        .onLoadCityForecast(widget.cityNameList);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // WidgetsFlutterBinding.ensureInitialized().;
-    // List<Forecast> citiesForecasts = [];
-    // var weatherState = BlocProvider.of<WeatherCubit>(context).state;
-    // if (weatherState is WeatherLoaded) {
-    // citiesForecasts = weatherState.citiesForecasts;
-    // }
-    // var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+        titleTextStyle: TextStyle(
+            color: Theme.of(context).primaryColorDark,
+            fontSize: 25,
+            fontFamily: 'Pacifico'),
         leading: IconButton(
           icon: Icon(Icons.navigate_before, color: Theme.of(context).cardColor),
           iconSize: 35,
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Прогноз погоди в \n ${widget.country}'),
+        title: Text(
+          'Wather forecast in ${widget.country}',
+        ),
       ),
-      body: BlocBuilder<WeatherCubit, WeatherState>(builder: (context, state) {
-        return switch (state) {
-          WeatherInitial() || WeatherLoading() => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          WeatherLoaded() => Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: state.citiesForecasts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  // if (weatherState is WeatherLoaded) {
-                  // var citiesForecasts = weatherState.citiesForecasts;
-                  return Card(
-                      child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      CityWidget(forecast: state.citiesForecasts[index]),
-                      TempWidget(forecast: state.citiesForecasts[index])
-                    ],
-                  ));
-                  // } else {
-                  // return CircularProgressIndicator();
-                  // }
-                  // return Card(
-                  //     child: Column(
-                  //   children: [
-                  //     CityWidget(forecast: citiesForecasts[index]),
-                  //     TempWidget(forecast: citiesForecasts[index])
-                  //   ],
-                  // ));
-                },
+      body: RefreshIndicator(
+        backgroundColor: Colors.transparent,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        onRefresh: () => _pullRefresh(),
+        child:
+            BlocBuilder<WeatherCubit, WeatherState>(builder: (context, state) {
+          return switch (state) {
+            WeatherInitial() || WeatherLoading() => const Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
-          WeatherLoadingFailure() => const Text('Error'),
-        };
-      }),
+            WeatherLoaded() => Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.citiesForecasts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                        elevation: 3,
+                        color: Theme.of(context).cardColor,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            CityWidget(forecast: state.citiesForecasts[index]),
+                            TempWidget(forecast: state.citiesForecasts[index]),
+                            DetailsWidget(
+                                forecast: state.citiesForecasts[index]),
+                            Container(
+                              margin: const EdgeInsets.all(8),
+                              height: 103,
+                              width: MediaQuery.of(context).size.width - 40,
+                              child: DaysForecastWidget(
+                                  forecast: state.citiesForecasts[index]),
+                            )
+                          ],
+                        ));
+                  },
+                ),
+              ),
+            WeatherLoadingFailure() => const Text('Error'),
+          };
+        }),
+      ),
     );
   }
 }

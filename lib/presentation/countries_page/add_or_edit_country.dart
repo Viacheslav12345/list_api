@@ -26,6 +26,18 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
   String nameCountry = '';
   String imageCountry = '';
 
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: "Enter country name.",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: const Color.fromARGB(255, 248, 104, 104),
+      textColor: Theme.of(context).cardColor,
+      fontSize: 18.0,
+    );
+  }
+
   @override
   void initState() {
     _countryNameController =
@@ -51,15 +63,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
 
   void addCity() {
     if (_cityNameController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: "Введіть назву міста.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: const Color.fromARGB(255, 248, 104, 104),
-        textColor: Theme.of(context).cardColor,
-        fontSize: 18.0,
-      );
+      showToast("Enter city name.");
     } else if (_cityNameController.text.isNotEmpty &&
         !citiesList.contains(_cityNameController.text)) {
       citiesList.insert(0, _cityNameController.text);
@@ -88,7 +92,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               height: 20,
             ),
             Text(
-              'Країна',
+              'Country',
               style: Theme.of(context).primaryTextTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -97,7 +101,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               controller: _countryNameController,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Назва країни не повинна бути пустою";
+                  return "The country name must not be empty!";
                 }
                 return null;
               },
@@ -110,7 +114,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   isCollapsed: true,
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                  hintText: "Назва країни*",
+                  hintText: "Country name*",
                   hintStyle: Theme.of(context).textTheme.bodySmall,
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -118,8 +122,8 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15)),
                   errorStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 248, 104, 104)),
                   errorBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     borderSide: BorderSide(
@@ -137,9 +141,13 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                     ),
                   )),
               onEditingComplete: () {
-                nameCountry = _countryNameController.text;
-                FocusScope.of(context).nextFocus();
-                setState(() {});
+                if (_cityNameController.text.isEmpty) {
+                  showToast("Enter country name.");
+                } else {
+                  nameCountry = _countryNameController.text;
+                  FocusScope.of(context).nextFocus();
+                  setState(() {});
+                }
               },
             ),
             const SizedBox(
@@ -150,7 +158,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
               height: 10,
             ),
             Text(
-              'Міста',
+              'Cities',
               style: Theme.of(context).primaryTextTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -161,7 +169,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                     controller: _cityNameController,
                     validator: (value) {
                       if (citiesList.isEmpty) {
-                        return "Назва міста не повинна бути пустою";
+                        return "The city name must not be empty!";
                       }
                       return null;
                     },
@@ -174,7 +182,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                         isCollapsed: true,
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 13),
-                        hintText: "Назва міста*",
+                        hintText: "City name*",
                         hintStyle: Theme.of(context).textTheme.bodySmall,
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -182,8 +190,8 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15)),
                         errorStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 248, 104, 104)),
                         errorBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           borderSide: BorderSide(
@@ -254,7 +262,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                         ],
                       ))
                     : Text(
-                        'Введіть хоча б одну назву міста в поле "Міста"',
+                        'Enter at least one city name in the "Cities" field',
                         style: Theme.of(context).primaryTextTheme.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -275,25 +283,30 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                   autoValidate = true;
                 });
 
-                var country = Country(
-                  name: _countryNameController.text,
-                  cities: citiesList,
-                  image: imageCountry,
-                );
-                final countryBloc = BlocProvider.of<CountriesCubit>(context);
+                if (_cityNameController.text.isNotEmpty &&
+                    citiesList.isNotEmpty) {
+                  var country = Country(
+                    name: _countryNameController.text,
+                    cities: citiesList,
+                    image: imageCountry,
+                  );
+                  final countryBloc = BlocProvider.of<CountriesCubit>(context);
 
-                (widget.country != null)
-                    ? countryBloc.onEditCountry(country).whenComplete(() {
-                        countryBloc.onLoadAllCountries();
-                        Navigator.pop(context);
-                      })
-                    : countryBloc.onAddCountry(country).whenComplete(() {
-                        countryBloc.onLoadAllCountries();
-                        Navigator.pop(context);
-                      });
+                  (widget.country != null)
+                      ? countryBloc.onEditCountry(country).whenComplete(() {
+                          countryBloc.onLoadAllCountries();
+                          Navigator.pop(context);
+                        })
+                      : countryBloc.onAddCountry(country).whenComplete(() {
+                          countryBloc.onLoadAllCountries();
+                          Navigator.pop(context);
+                        });
+                } else {
+                  showToast("Check if entered country name and city name.");
+                }
               },
-              child: Text('Зберегти',
-                  style: Theme.of(context).textTheme.titleSmall),
+              child:
+                  Text('Save', style: Theme.of(context).textTheme.titleSmall),
             ),
           ],
         ),

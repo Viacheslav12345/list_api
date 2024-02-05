@@ -5,18 +5,20 @@ final lightTheme = ThemeData.light().copyWith(
   useMaterial3: true,
   scaffoldBackgroundColor: const Color.fromARGB(255, 127, 117, 148),
   appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(
-        color: Color.fromARGB(255, 236, 228, 251), //change your color here
-      ),
-      color: Color.fromARGB(255, 127, 117, 148),
-      centerTitle: true,
-      titleTextStyle: TextStyle(
-          color: Color.fromARGB(255, 236, 228, 251),
-          fontSize: 32,
-          fontFamily: 'Pacifico')),
+    elevation: 3,
+    iconTheme: IconThemeData(
+      color: Color.fromARGB(255, 236, 228, 251), //change your color here
+    ),
+    color: Color.fromARGB(255, 127, 117, 148),
+    centerTitle: true,
+    // titleTextStyle: TextStyle(
+    //     color: Color.fromARGB(255, 236, 228, 251),
+    //     fontSize: 32,
+    //     fontFamily: 'Pacifico')
+  ),
   primaryColor: Colors.white,
   secondaryHeaderColor: const Color.fromARGB(255, 185, 185, 185),
-  primaryColorDark: const Color(0xff434343),
+  primaryColorDark: const Color.fromARGB(255, 73, 67, 85),
   shadowColor: Colors.grey,
   cardColor: const Color.fromARGB(255, 236, 228, 251),
   bottomSheetTheme: const BottomSheetThemeData(
@@ -35,16 +37,19 @@ final lightTheme = ThemeData.light().copyWith(
   textTheme: const TextTheme(
     titleLarge: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
+      fontWeight: FontWeight.bold,
       fontSize: 28,
       fontFamily: 'Comfortaa',
     ),
     titleMedium: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
+      fontWeight: FontWeight.bold,
       fontSize: 23,
       fontFamily: 'Comfortaa',
     ),
     titleSmall: TextStyle(
       color: Color.fromARGB(255, 73, 67, 85),
+      fontWeight: FontWeight.bold,
       fontSize: 19,
       fontFamily: 'Comfortaa',
     ),
@@ -61,6 +66,21 @@ final lightTheme = ThemeData.light().copyWith(
     bodySmall: TextStyle(
       color: Color.fromARGB(255, 128, 118, 148),
       fontSize: 13,
+      fontFamily: 'Comfortaa',
+    ),
+    labelLarge: TextStyle(
+      color: Color.fromARGB(255, 73, 67, 85),
+      fontSize: 22,
+      fontFamily: 'Comfortaa',
+    ),
+    labelMedium: TextStyle(
+      color: Color.fromARGB(255, 73, 67, 85),
+      fontSize: 18,
+      fontFamily: 'Comfortaa',
+    ),
+    labelSmall: TextStyle(
+      color: Color.fromARGB(255, 73, 67, 85),
+      fontSize: 15,
       fontFamily: 'Comfortaa',
     ),
   ),

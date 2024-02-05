@@ -15,9 +15,9 @@ class CountriesCubit extends Cubit<CountriesState> {
 
   void onLoadAllCountries() async {
     try {
-      if (state is! CountriesLoaded) {
-        emit(CountriesLoading());
-      }
+      // if (state is! CountriesLoaded) {
+      emit(CountriesLoading());
+      // }
       final List<Country> allCountries =
           await databaseService.getAllCountries();
       emit(CountriesLoaded(allCountries));

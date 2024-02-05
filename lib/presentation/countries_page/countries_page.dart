@@ -41,6 +41,7 @@ class CountriesPage extends StatelessWidget {
                         itemCount: allCountries.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                              elevation: 3,
                               margin: const EdgeInsets.symmetric(vertical: 7),
                               color: theme.cardColor,
                               child: Slidable(
@@ -161,8 +162,6 @@ class CountriesPage extends StatelessWidget {
                                                       ),
                                                     ),
                                                   );
-
-                                              //!! add timout 1 sec
                                             },
                                             child: Icon(
                                               Icons.navigate_next,
@@ -179,17 +178,19 @@ class CountriesPage extends StatelessWidget {
                               ));
                         }),
                   ),
-                  InkWell(
-                    onTap: () => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return const Dialog(
-                              insetPadding: EdgeInsets.all(20),
-                              child: AddOrEditCountry(country: null));
-                        }),
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(vertical: 7),
-                      color: theme.cardColor,
+                  Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 7),
+                    color: theme.cardColor,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(13),
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const Dialog(
+                                insetPadding: EdgeInsets.all(20),
+                                child: AddOrEditCountry(country: null));
+                          }),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

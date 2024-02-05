@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:list_api/data/models/weather.dart';
 
 class CityWidget extends StatelessWidget {
@@ -8,22 +9,27 @@ class CityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    String city = forecast?.city?.name ?? '';
+    String country = forecast?.city?.country ?? '';
+    var formatDate =
+        DateTime.fromMillisecondsSinceEpoch(forecast!.list![0].dt! * 1000);
+    String date = DateFormat('EEEE, MMM d').format(formatDate);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        Text(
-          '${forecast?.city?.name},',
-          textAlign: TextAlign.right,
-          style: theme.textTheme.titleMedium,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              city,
+              textAlign: TextAlign.right,
+              style: theme.textTheme.titleMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
-        const SizedBox(
-          width: 10,
-        ),
-        Text(forecast?.city?.country ?? ''),
-        // Text(forecast?.list?[0].main?.temp?.toInt().toString() ?? ''),
+        Text(date, style: theme.textTheme.bodySmall),
       ],
     );
   }
