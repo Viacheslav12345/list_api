@@ -5,6 +5,9 @@ final lightTheme = ThemeData.light().copyWith(
   useMaterial3: true,
   scaffoldBackgroundColor: const Color.fromARGB(255, 127, 117, 148),
   appBarTheme: const AppBarTheme(
+      iconTheme: IconThemeData(
+        color: Color.fromARGB(255, 236, 228, 251), //change your color here
+      ),
       color: Color.fromARGB(255, 127, 117, 148),
       centerTitle: true,
       titleTextStyle: TextStyle(
@@ -92,15 +95,16 @@ final lightTheme = ThemeData.light().copyWith(
   ),
   iconButtonTheme: IconButtonThemeData(
     style: ButtonStyle(
-        backgroundColor:
-            MaterialStateProperty.all(const Color.fromARGB(255, 236, 228, 251)),
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
         iconColor: MaterialStateProperty.all(
             const Color.fromARGB(255, 127, 117, 148))),
   ),
   progressIndicatorTheme:
       const ProgressIndicatorThemeData(color: Colors.white10),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
-    TargetPlatform.android: ZoomPageTransitionsBuilder()
-    // CupertinoPageTransitionsBuilder()
+    // TargetPlatform.android: ZoomPageTransitionsBuilder()
+    TargetPlatform.android: CupertinoPageTransitionsBuilder()
+
+    //
   }),
 );

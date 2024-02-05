@@ -5,6 +5,8 @@ import 'package:list_api/data/models/country.dart';
 import 'package:list_api/presentation/countries_page/add_or_edit_country.dart';
 import 'package:list_api/presentation/countries_page/country_cubit/cubit/countries_cubit.dart';
 import 'package:list_api/presentation/countries_page/country_widgets/add_photo_country.dart';
+import 'package:list_api/presentation/weather_page/weather_cubit/weather_cubit.dart';
+import 'package:list_api/presentation/weather_page/weather_page.dart';
 
 class CountriesPage extends StatelessWidget {
   const CountriesPage({Key? key}) : super(key: key);
@@ -29,8 +31,7 @@ class CountriesPage extends StatelessWidget {
 
         return switch (state) {
           CountriesLoaded() => Padding(
-              padding:
-                  const EdgeInsets.only(top: 7, bottom: 50, left: 7, right: 7),
+              padding: const EdgeInsets.all(7),
               child: Column(
                 children: [
                   Flexible(
@@ -98,7 +99,7 @@ class CountriesPage extends StatelessWidget {
                                           10,
                                       child: Text(
                                         allCountries[index].name,
-                                        textAlign: TextAlign.center,
+                                        textAlign: TextAlign.right,
                                         style: theme.textTheme.titleMedium,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
@@ -110,21 +111,66 @@ class CountriesPage extends StatelessWidget {
                                       width: MediaQuery.of(context).size.width /
                                               3 -
                                           10,
-                                      child: Column(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          for (var i = 0;
-                                              i <
-                                                  allCountries[index]
-                                                      .cities
-                                                      .length;
-                                              i++)
-                                            Text(
-                                              allCountries[index].cities[i],
-                                              textAlign: TextAlign.center,
-                                              style: theme.textTheme.bodySmall,
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
+                                          Column(
+                                            // mainAxisAlignment:
+                                            //     MainAxisAlignment.start,
+                                            children: [
+                                              for (var i = 0;
+                                                  i <
+                                                      allCountries[index]
+                                                          .cities
+                                                          .length;
+                                                  i++)
+                                                Text(
+                                                  allCountries[index].cities[i],
+                                                  // textAlign: TextAlign.left,
+                                                  style:
+                                                      theme.textTheme.bodySmall,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              BlocProvider.of<WeatherCubit>(
+                                                      context)
+                                                  .onLoadCityForecast(
+                                                      allCountries[index]
+                                                          .cities)
+                                                  .then(
+                                                    (value) =>
+                                                        Navigator.of(context)
+                                                            .push(
+                                                      MaterialPageRoute<void>(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            WeatherPage(
+                                                          country: allCountries[
+                                                                  index]
+                                                              .name,
+                                                          cityNameList:
+                                                              allCountries[
+                                                                      index]
+                                                                  .cities,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+
+                                              //!! add timout 1 sec
+                                            },
+                                            child: Icon(
+                                              Icons.navigate_next,
+                                              color: Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                              size: 35,
                                             ),
+                                          ),
                                         ],
                                       ),
                                     )
@@ -161,9 +207,10 @@ class CountriesPage extends StatelessWidget {
                             ),
                             height: 45,
                             width: MediaQuery.of(context).size.width / 3 - 10,
-                            child: const Icon(
+                            child: Icon(
                               Icons.add,
                               size: 35,
+                              color: Theme.of(context).cardColor,
                             ),
                           ),
                           SizedBox(

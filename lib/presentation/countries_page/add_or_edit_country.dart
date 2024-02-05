@@ -24,13 +24,19 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
   bool autoValidate = false;
   List<String> citiesList = [];
   String nameCountry = '';
+  String imageCountry = '';
 
   @override
   void initState() {
     _countryNameController =
         TextEditingController(text: widget.country?.name ?? '');
 
-    citiesList = (widget.country != null) ? widget.country!.cities : [];
+    (widget.country != null)
+        ? {
+            citiesList = widget.country!.cities,
+            imageCountry = widget.country!.image
+          }
+        : null;
     nameCountry = _countryNameController.text;
 
     super.initState();
@@ -69,8 +75,9 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+    return Container(
+      height: 500,
+      padding: const EdgeInsets.all(15),
       child: Form(
         autovalidateMode: autoValidate
             ? AutovalidateMode.onUserInteraction
@@ -271,7 +278,7 @@ class _AddOrEditCountryState extends State<AddOrEditCountry> {
                 var country = Country(
                   name: _countryNameController.text,
                   cities: citiesList,
-                  image: '',
+                  image: imageCountry,
                 );
                 final countryBloc = BlocProvider.of<CountriesCubit>(context);
 
