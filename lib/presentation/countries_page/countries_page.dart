@@ -43,10 +43,10 @@ class CountriesPage extends StatelessWidget {
                         itemCount: allCountries.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
-                              elevation: 3,
-                              margin: const EdgeInsets.symmetric(vertical: 7),
-                              color: theme.cardColor,
-                              child: Slidable(
+                            elevation: 3,
+                            margin: const EdgeInsets.symmetric(vertical: 7),
+                            color: theme.cardColor,
+                            child: Slidable(
                                 key: UniqueKey() /*ValueKey(index)*/,
                                 endActionPane: ActionPane(
                                   motion: const ScrollMotion(),
@@ -92,93 +92,90 @@ class CountriesPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(7),
-                                      width: MediaQuery.of(context).size.width /
-                                              3 -
-                                          10,
-                                      child: Text(
-                                        allCountries[index].name,
-                                        textAlign: TextAlign.right,
-                                        style: theme.textTheme.titleMedium,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    AddPhotoCountry(
-                                        country: allCountries[index]),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                              3 -
-                                          10,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              for (var i = 0;
-                                                  i <
-                                                      allCountries[index]
-                                                          .cities
-                                                          .length;
-                                                  i++)
-                                                Text(
-                                                  allCountries[index].cities[i],
-                                                  style:
-                                                      theme.textTheme.bodySmall,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                            ],
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10),
+                                  onTap: () {
+                                    BlocProvider.of<WeatherCubit>(context)
+                                        .onLoadCityForecast(
+                                            allCountries[index].cities,
+                                            MyApp.of(context)!
+                                                .locale
+                                                .languageCode)
+                                        .then(
+                                          (value) => Navigator.of(context).push(
+                                            MaterialPageRoute<void>(
+                                              builder: (BuildContext context) =>
+                                                  WeatherPage(
+                                                country:
+                                                    allCountries[index].name,
+                                                cityNameList:
+                                                    allCountries[index].cities,
+                                              ),
+                                            ),
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              BlocProvider.of<WeatherCubit>(
-                                                      context)
-                                                  .onLoadCityForecast(
-                                                      allCountries[index]
-                                                          .cities,
-                                                      MyApp.of(context)!
-                                                          .locale
-                                                          .languageCode)
-                                                  .then(
-                                                    (value) =>
-                                                        Navigator.of(context)
-                                                            .push(
-                                                      MaterialPageRoute<void>(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            WeatherPage(
-                                                          country: allCountries[
-                                                                  index]
-                                                              .name,
-                                                          cityNameList:
-                                                              allCountries[
-                                                                      index]
-                                                                  .cities,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                            },
-                                            child: Icon(
+                                        );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(7),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    3 -
+                                                10,
+                                        child: Text(
+                                          allCountries[index].name,
+                                          textAlign: TextAlign.right,
+                                          style: theme.textTheme.titleMedium,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      AddPhotoCountry(
+                                          country: allCountries[index]),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    3 -
+                                                10,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                for (var i = 0;
+                                                    i <
+                                                        allCountries[index]
+                                                            .cities
+                                                            .length;
+                                                    i++)
+                                                  Text(
+                                                    allCountries[index]
+                                                        .cities[i],
+                                                    style: theme
+                                                        .textTheme.bodySmall,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                              ],
+                                            ),
+                                            Icon(
                                               Icons.navigate_next,
                                               color: Theme.of(context)
                                                   .scaffoldBackgroundColor,
-                                              size: 35,
+                                              size: 40,
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ));
+                                    ],
+                                    // ),
+                                  ),
+                                )),
+                          );
                         }),
                   ),
                   Card(
@@ -186,7 +183,7 @@ class CountriesPage extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 7),
                     color: theme.cardColor,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(13),
+                      // borderRadius: BorderRadius.circular(13),
                       onTap: () => showDialog(
                           context: context,
                           builder: (context) {
